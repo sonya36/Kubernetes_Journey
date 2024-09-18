@@ -57,3 +57,27 @@ Kubernetes has a master-slave architecture, where multiple components interact t
 - **Kube-proxy:** Handles network routing for services in the cluster, enabling communication between components.
   
 - **Containers:** The applications running inside isolated environments on these nodes, typically managed through tools like Docker.
+
+# Kubernetes Node Architecture
+
+In a Kubernetes cluster, the architecture is divided into two main types of nodes: **master nodes** and **worker nodes**. Each type serves a distinct role in managing containerized applications. Here’s a breakdown of the differences between the two:
+
+| Aspect                       | Master Node                                            | Worker Node                                            |
+|------------------------------|-------------------------------------------------------|-------------------------------------------------------|
+| **Role**                     | Responsible for overall management and orchestration of the Kubernetes cluster. | Hosts applications and services deployed in the cluster. |
+| **Control Plane**            | Acts as the control plane, making decisions about the cluster (e.g., scheduling, scaling). | Executes workloads and runs the actual applications.   |
+| **Key Components**           |  - **API Server:** Front-end for the control plane, processing all RESTful requests.  <br> - **Scheduler:** Assigns workloads based on resource availability. <br> - **Controller Manager:** Regulates the state of the cluster. <br> - **etcd:** Distributed key-value store for all cluster data and state information. |  - **Kubelet:** Ensures that containers are running in a Pod as per specifications. <br> - **Kube-proxy:** Manages network routing and load balancing. <br> - **Container Runtime:** Software to run containers (e.g., Docker, containerd). |
+| **Management**               | Single point of management for the cluster, often configured for high availability. | Multiple worker nodes can be scaled up or down based on demand. |
+| **User Applications**        | Does not run user applications or workloads; primarily management functions. | Runs user applications, essential for application performance and availability. |
+
+# Virtualization Vs Containerization
+| Feature             | Virtualization                                           | Containerization                                    |
+|---------------------|---------------------------------------------------------|----------------------------------------------------|
+| **Architecture**    | Each VM runs a full OS on top of a hypervisor.         | Containers share the host OS kernel and run isolated processes. |
+|                     | VMs include the application, its dependencies, and a complete OS, leading to resource overhead. | Containers include the application and its dependencies, relying on the host OS kernel. |
+| **Resource Efficiency** | VMs are resource-intensive and can lead to inefficient usage. | Containers are lightweight, consuming fewer resources, and can start almost instantly. |
+| **Isolation**       | Strong isolation; each VM runs its own OS instance, enhancing security. | Less isolation; containers share the same kernel, leading to potential security concerns. |
+| **Portability**     | VMs can be moved between hypervisors but may require significant setup. | Highly portable; run anywhere with a container runtime, making movement across environments seamless. |
+| **Management**      | More complex management due to multiple full systems.   | Simplified management and orchestration via tools like Kubernetes, suitable for microservices. |
+
+**Quick Note**: Containers provide a lightweight, efficient, and portable method for running applications by sharing the host OS kernel, whereas virtualization offers strong isolation but tends to be heavier due to separate OS instances. Organizations often choose based on use cases, performance requirements, and deployment strategies.
